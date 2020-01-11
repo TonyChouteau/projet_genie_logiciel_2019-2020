@@ -1,34 +1,32 @@
 package database;
 
 import java.sql.*;
-import database.DataId;
-import database.DataServ;
+import database.*;
 
 public class DataCon {
     public DataId did;
     public DataServ dserv;
     public Connection con;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {//example of query
         System.out.println("Beginning ...");
         DataCon datacon = new DataCon();
         datacon.connect();
 
-        try {   
-            Statement stmt=datacon.con.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from Eleve");
+        Result res = datacon.query("select * from Eleve");
 
-            while(rs.next()){System.out.println(rs.getInt(1)+"  "+rs.getInt(2));} //+"  "+rs.getString(3));
+        try {   
+            while(res.infos.next()){System.out.println(res.infos.getInt(1)+"  "+res.infos.getInt(2));} //+"  "+rs.getString(3));
         }catch( Exception e){
             System.out.println(e.getMessage());
         }
 
         System.out.println("Hello World!1");
-        try {   
-            Statement stmt=datacon.con.createStatement();
-            ResultSet rs=stmt.executeQuery("call afficherGroupe("+1+")");
 
-            while(rs.next()){System.out.println(rs.getInt(1)+"  "+rs.getInt(2));} //+"  "+rs.getString(3));
+        res = datacon.query("call afficherGroupe("+1+")");
+
+        try {   
+            while(res.infos.next()){System.out.println(res.infos.getInt(1)+"  "+res.infos.getInt(2));} //+"  "+rs.getString(3));
         }catch( Exception e){
             System.out.println(e.getMessage());
         }
@@ -42,17 +40,19 @@ public class DataCon {
         this.dserv = new DataServ();
     }
 
-    /*public ResultSet query(String query){
+    public Result query(String query){
+        Result res;
         ResultSet rs;
         try{
             Statement stmt=con.createStatement();
             rs=stmt.executeQuery(query);
+            res = new Result(rs);
         }catch(Exception e){
             System.out.println(e.getMessage());
-            rs = new ResultSet();
+            return new Result();
         }  
-        return rs;
-    }*/
+        return res;
+    }
 
 
     public void connect(){
