@@ -2,6 +2,8 @@ package database;
 
 import java.sql.*;
 import database.*;
+import java.util.ArrayList; 
+import java.util.List; 
 
 public class DataCon {
     public DataId did;
@@ -13,23 +15,13 @@ public class DataCon {
         DataCon datacon = new DataCon();
         datacon.connect();
 
-        Result res = datacon.query("select * from Eleve");
-
-        try {   
-            while(res.infos.next()){System.out.println(res.infos.getInt(1)+"  "+res.infos.getInt(2));} //+"  "+rs.getString(3));
-        }catch( Exception e){
-            System.out.println(e.getMessage());
-        }
+        List<List<String>> res = datacon.query("select * from Eleve");
+        System.out.println(res.toString());
 
         System.out.println("Hello World!1");
 
         res = datacon.query("call afficherGroupe("+1+")");
-
-        try {   
-            while(res.infos.next()){System.out.println(res.infos.getInt(1)+"  "+res.infos.getInt(2));} //+"  "+rs.getString(3));
-        }catch( Exception e){
-            System.out.println(e.getMessage());
-        }
+        System.out.println(res.toString());
 
         datacon.disconnect();
         System.out.println("Hello World!2");
@@ -40,18 +32,28 @@ public class DataCon {
         this.dserv = new DataServ();
     }
 
-    public Result query(String query){
-        Result res;
+    public List<List<String>> query(String query){
+        List<List<String>> list = new ArrayList<List<String>>();
         ResultSet rs;
+        ResultSetMetaData rsmd;
+        List<String> record;
         try{
             Statement stmt=con.createStatement();
             rs=stmt.executeQuery(query);
-            res = new Result(rs);
+            rsmd = rs.getMetaData();
+            while (rs.next()){
+                record = new ArrayList<String>();
+                for (int i = 1; i <= rsmd.getColumnCount(); i++){
+                    record.add(rs.getString(i));
+                }
+                list.add(record); 
+            }
+        
         }catch(Exception e){
             System.out.println(e.getMessage());
-            return new Result();
+            return list;
         }  
-        return res;
+        return list;
     }
 
 
