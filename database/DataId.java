@@ -12,6 +12,11 @@ public class DataId{
         this.password = password;
     }
 
+    DataId(){//constructor prod group
+        this.username = "1920_INFO2_FluffyCorp";
+        this.password = "PXESKqxehqGPSjc8xgy4Sx56LCZY3V27";
+    }
+
     public String getUsername() {
         return username;
     }

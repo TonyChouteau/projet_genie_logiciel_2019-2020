@@ -11,11 +11,19 @@ public class DataServ{
         this.port = port;
     }
 
-    DataServ(){//default local
+    DataServ(int i){//default local
         /**
          * Constructor
          */
         this.url = "localhost";
+        this.port = 3306;
+    }
+
+    DataServ(){//default serv prod
+        /**
+         * Constructor
+         */
+        this.url = "127.0.0.1/barn-e-01";
         this.port = 3306;
     }
 

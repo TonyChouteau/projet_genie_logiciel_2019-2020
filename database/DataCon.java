@@ -28,7 +28,7 @@ public class DataCon {
         System.out.println("Beginning ...");
         DataCon datacon = new DataCon();
         datacon.connect();
-
+        System.out.println("connection finished or failed");
         List<List<String>> res = datacon.query("select * from Maquette");
         System.out.println(res.toString());
 
@@ -59,7 +59,7 @@ public class DataCon {
         /**
          * Example for localhost
          */
-        this.did = new DataId("user", "1234");
+        this.did = new DataId();//"user", "1234");
         this.dserv = new DataServ();
     }
 
