@@ -29,7 +29,7 @@ public class DataCon {
         DataCon datacon = new DataCon();
         datacon.connect();
         System.out.println("connection finished or failed");
-        List<List<String>> res = datacon.query("select * from Maquette");
+        ArrayList<ArrayList<String>> res = datacon.query("select * from Maquette");
         System.out.println(res.toString());
 
         System.out.println("Hello World!1");
@@ -59,8 +59,8 @@ public class DataCon {
         /**
          * Example for localhost
          */
-        this.did = new DataId();//"user", "1234");
-        this.dserv = new DataServ();
+        this.did = new DataId("user", "1234");
+        this.dserv = new DataServ(0);
     }
 
     DataCon(DataId did, DataServ dserv){
@@ -72,14 +72,14 @@ public class DataCon {
         this.dserv = dserv;
     }
 
-    public List<List<String>> query(String query){
+    public ArrayList<ArrayList<String>> query(String query){
         /**
          * Gets an SQL Query as String and returns the results as a List<List<String>>
          */
-        List<List<String>> list = new ArrayList<List<String>>();
+        ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
         ResultSet rs;
         ResultSetMetaData rsmd;
-        List<String> record;
+        ArrayList<String> record;
         try{
             Statement stmt=con.createStatement();
             rs=stmt.executeQuery(query);
