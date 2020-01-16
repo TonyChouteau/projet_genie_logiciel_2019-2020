@@ -19,19 +19,26 @@ public class DataCon {
      */
     private DataId did;
     private DataServ dserv;
-    private Connection con;
-
+    private Connection con; 
     
 
     public static void main(String[] args) {//example of query
         /**
          * Example of connecting to the database
          */
+        int tmpint;
         System.out.println("Beginning ...");
         DataCon datacon = new DataCon();
         datacon.connect();
         System.out.println("connection finished or failed");
-        ArrayList<ArrayList<String>> res = datacon.query("show tables;");
+        ArrayList<ArrayList<String>> res = datacon.query("select * from Eleve;");
+        System.out.println(res.toString());
+
+        System.out.println("test update");
+        tmpint = datacon.update("insert into Eleve values (14,1);");
+        System.out.println("update fait, nb : "+String.valueOf(tmpint));
+
+        res = datacon.query("select * from Eleve;");
         System.out.println(res.toString());
 
         /*ArrayList<ArrayList<String>> res = datacon.query("select * from Maquette");
@@ -62,9 +69,9 @@ public class DataCon {
 
     DataCon(){
         /**
-         * Example for localhost
+         * Example for prod server
          */
-        this.did = new DataId();//"user", "1234");
+        this.did = new DataId();
         this.dserv = new DataServ();
     }
 
@@ -104,6 +111,17 @@ public class DataCon {
         return list;
     }
 
+    public int update(String request){
+        int res;
+        try{
+            Statement stmt=con.createStatement();
+            res = stmt.executeUpdate(request);
+        }catch(Exception e){
+            System.out.println("update error : "+ e.getMessage());
+            return 0;
+        } 
+        return res;
+    }
 
     public void connect(){
         /**
