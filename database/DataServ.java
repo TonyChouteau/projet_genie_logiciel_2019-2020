@@ -6,6 +6,7 @@ public class DataServ{
      */
     public String url;
     public int port;
+    public String databasedused;
     DataServ(String url, int port){
         this.url = url;
         this.port = port;
@@ -17,14 +18,16 @@ public class DataServ{
          */
         this.url = "localhost";
         this.port = 3306;
+        this.databasedused = "mydb";
     }
 
     DataServ(){//default serv prod
         /**
          * Constructor
          */
-        this.url = "127.0.0.1/barn-e-01";
+        this.url = "barn-e-01";
         this.port = 3306;
+        this.databasedused = "1920_INFO2_ERiP";
     }
 
     public String getUrl() {

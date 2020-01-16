@@ -21,6 +21,8 @@ public class DataCon {
     private DataServ dserv;
     private Connection con;
 
+    
+
     public static void main(String[] args) {//example of query
         /**
          * Example of connecting to the database
@@ -29,7 +31,10 @@ public class DataCon {
         DataCon datacon = new DataCon();
         datacon.connect();
         System.out.println("connection finished or failed");
-        ArrayList<ArrayList<String>> res = datacon.query("select * from Maquette");
+        ArrayList<ArrayList<String>> res = datacon.query("show tables;");
+        System.out.println(res.toString());
+
+        /*ArrayList<ArrayList<String>> res = datacon.query("select * from Maquette");
         System.out.println(res.toString());
 
         System.out.println("Hello World!1");
@@ -49,7 +54,7 @@ public class DataCon {
         //System.out.println(res.toString());
 
         res = datacon.query("Select * from Eleve");
-        System.out.println(res.toString());
+        System.out.println(res.toString());*/
 
         datacon.disconnect();
         System.out.println("Good bye World!");
@@ -59,8 +64,8 @@ public class DataCon {
         /**
          * Example for localhost
          */
-        this.did = new DataId("user", "1234");
-        this.dserv = new DataServ(0);
+        this.did = new DataId();//"user", "1234");
+        this.dserv = new DataServ();
     }
 
     DataCon(DataId did, DataServ dserv){
@@ -107,7 +112,7 @@ public class DataCon {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.con=DriverManager.getConnection(
-                    "jdbc:mysql://"+dserv.getUrl()+":"+dserv.getPort()+"/mydb",did.getUsername(),did.getPassword());
+                    "jdbc:mysql://"+dserv.getUrl()+":"+dserv.getPort()+"/"+dserv.databasedused,did.getUsername(),did.getPassword());
             //here mydb is database name, root is username and password
         }catch( Exception e){
             System.out.println(e.getMessage());
