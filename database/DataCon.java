@@ -123,18 +123,14 @@ public class DataCon {
         return res;
     }
 
-    public void connect(){
+    public void connect() throws Exception{
         /**
          * Connects the connection Object to the sql database
          */
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            this.con=DriverManager.getConnection(
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        this.con=DriverManager.getConnection(
                     "jdbc:mysql://"+dserv.getUrl()+":"+dserv.getPort()+"/"+dserv.databasedused,did.getUsername(),did.getPassword());
             //here mydb is database name, root is username and password
-        }catch( Exception e){
-            System.out.println(e.getMessage());
-        }
     }
 
     public void disconnect(){
