@@ -71,6 +71,7 @@ public class Server {
         Response rep;
         Request req = (Request) is.readObject();
         connection_db();
+        System.out.println(req.request);
         resArray = datacon.query(req.request);
         rep = new Response(resArray, "");
         os.writeObject(rep);

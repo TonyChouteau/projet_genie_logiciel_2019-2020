@@ -27,7 +27,7 @@ public class DataServ{
          */
         this.url = "barn-e-01";
         this.port = 3306;
-        this.databasedused = "1920_INFO2_ERiP";
+        this.databasedused = "1920_INFO2_FluffyCorp";
     }
 
     public String getUrl() {

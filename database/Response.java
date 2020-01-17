@@ -1,9 +1,14 @@
 package database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Response {
+public class Response implements Serializable{
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     ArrayList<ArrayList<String>> content;
     String error;
 
