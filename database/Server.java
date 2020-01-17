@@ -56,6 +56,18 @@ public class Server implements Runnable{
             if(requete.type == 0){
                 ArrayList<ArrayList<String>> rep =  datacon.query(requete.args);
                 System.out.println(rep.toString());
+
+                int port = 1095;
+                String host = "127.0.0.1"; // localhost
+                try{//connection 
+                    Socket skt = new Socket(host, port);
+                    ObjectOutputStream out = new ObjectOutputStream(skt.getOutputStream());
+                    out.writeObject(rep);
+                    skt.close();
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+                
             }    
         }
         /*
