@@ -16,4 +16,24 @@ public class Response implements Serializable{
         this.error = error;
         this.content = content;
     }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public ArrayList<ArrayList<String>> getContent() {
+        return content;
+    }
+
+    public void setContent(ArrayList<ArrayList<String>> content) {
+        this.content = content;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }

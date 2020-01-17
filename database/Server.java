@@ -12,15 +12,6 @@ public class Server {
     Socket socket;// = s.accept();
     Request requete;
     ObjectInputStream in;
-    /*
-     * public static void main (String[] args) throws IOException,
-     * ClassNotFoundException { ServerSocket s = new ServerSocket(port); Socket
-     * socket = s.accept(); ObjectInputStream in = new
-     * ObjectInputStream(socket.getInputStream()); String oserver = (String)
-     * in.readObject(); System.out.println("recu = " + oserver); oserver = (String)
-     * in.readObject(); System.out.println("recu = " + oserver); oserver = (String)
-     * in.readObject(); System.out.println("recu = " + oserver); socket.close(); }
-     */
 
     public Server() {
         init();
@@ -67,13 +58,11 @@ public class Server {
     }
     
     public void runS(ObjectInputStream is, ObjectOutputStream os) throws IOException, ClassNotFoundException {
-        ArrayList<ArrayList<String>> resArray;
         Response rep;
         Request req = (Request) is.readObject();
         connection_db();
         System.out.println(req.request);
-        resArray = datacon.query(req.request);
-        rep = new Response(resArray, "");
+        rep = handle_request(req);
         os.writeObject(rep);
     }
 
@@ -87,51 +76,16 @@ public class Server {
         }).start();
     }
 
-   /* @Override
-    public void run(){
-        
-
-        //socket creation
-        try{
-            this.s = new ServerSocket(port);
-            socket = s.accept();
-            in = new ObjectInputStream(socket.getInputStream());
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        Thread.currentThread().interrupt();//close if unable to connect
+    public Response handle_request(Request req){
+        System.out.println(req.type);
+        Response  res;
+        if(req.type == 0){
+            res = datacon.query(req.request);
+        }else{
+            res = datacon.update(req.request);
         }
-        
-        while(true){//listen to socket
-            try{//connection 
-                requete = (Request) in.readObject();
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-            }
-            if(requete.type == 0){
-                ArrayList<ArrayList<String>> rep =  datacon.query(requete.args);
-                System.out.println(rep.toString());
-
-                String host = "127.0.0.1"; // localhost
-                try{//connection 
-                    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                    out.writeObject(rep);
-                    socket.close();
-                }catch(Exception e){
-                    System.out.println(e.getMessage());
-                }
-                
-            }   
-        }
-        /*
-        socket.close();
-        datacon.disconnect();
-
-    }*/
-
-    /*public static ArrayList<ArrayList<String>> handle_request() throws Exception{
-        ArrayList<ArrayList<String>>  res;
         return res;
-    }*/
+    }
 
 
 

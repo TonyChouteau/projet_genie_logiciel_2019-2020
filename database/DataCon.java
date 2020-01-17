@@ -22,50 +22,24 @@ public class DataCon {
     private Connection con; 
     
 
-    /*public static void main(String[] args) {//example of query
-        /**
-         * Example of connecting to the database
+    public static void main(String[] args) throws Exception {//example of query
+
          
         int tmpint;
         System.out.println("Beginning ...");
         DataCon datacon = new DataCon();
         datacon.connect();
         System.out.println("connection finished or failed");
-        ArrayList<ArrayList<String>> res = datacon.query("select * from Eleve;");
-        System.out.println(res.toString());
+        Response res = datacon.query("select * from Eleve;");
+        System.out.println(res.content.toString());
 
         System.out.println("test update");
-        tmpint = datacon.update("insert into Eleve values (14,1);");
-        System.out.println("update fait, nb : "+String.valueOf(tmpint));
-
-        res = datacon.query("select * from Eleve;");
-        System.out.println(res.toString());
-
-        /*ArrayList<ArrayList<String>> res = datacon.query("select * from Maquette");
-        System.out.println(res.toString());
-
-        System.out.println("Hello World!1");
-
-        res = datacon.query("call afficherGroupe("+1+")");
-        System.out.println(res.toString());
-
-        System.out.println("ajout eleve");
-        res = datacon.query("call creerEleve("+1+")");
-        //System.out.println(res.toString());
-
-        res = datacon.query("Select * from Eleve");
-        System.out.println(res.toString());
-
-        System.out.println("supprime eleve");
-        res = datacon.query("call supprimerEleve(16)");
-        //System.out.println(res.toString());
-
-        res = datacon.query("Select * from Eleve");
-        System.out.println(res.toString());
-
+        res = datacon.update("insert into Eleve values (15,1);");
+        System.out.println(res.error);
+        System.out.println(res.content.toString());
         datacon.disconnect();
         System.out.println("Good bye World!");
-    }*/
+    }
 
     DataCon(){
         /**
@@ -84,7 +58,7 @@ public class DataCon {
         this.dserv = dserv;
     }
 
-    public ArrayList<ArrayList<String>> query(String query){
+    public Response query(String query){
         /**
          * Gets an SQL Query as String and returns the results as a List<List<String>>
          */
@@ -92,6 +66,7 @@ public class DataCon {
         ResultSet rs;
         ResultSetMetaData rsmd;
         ArrayList<String> record;
+        Response rep;
         try{
             Statement stmt=con.createStatement();
             rs=stmt.executeQuery(query);
@@ -103,22 +78,25 @@ public class DataCon {
                 }
                 list.add(record); 
             }
+            rep = new Response(list, "");
         
         }catch(Exception e){
             System.out.println("query error : "+ e.getMessage());
-            return list;
+            list = new ArrayList<ArrayList<String>>();
+            rep = new Response(list, e.getMessage());
         }  
-        return list;
+        return rep;
     }
 
-    public int update(String request){
-        int res;
+    public Response update(String request){
+        Response res;
+        ArrayList<ArrayList<String>> list;
         try{
             Statement stmt=con.createStatement();
-            res = stmt.executeUpdate(request);
+            res = new Response(new ArrayList<ArrayList<String>>(stmt.executeUpdate(request)), "") ;
         }catch(Exception e){
             System.out.println("update error : "+ e.getMessage());
-            return 0;
+            res  = new Response(new ArrayList<ArrayList<String>>(0), e.getMessage()) ;
         } 
         return res;
     }
