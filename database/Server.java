@@ -4,7 +4,6 @@ import java.net.*;
 import java.util.ArrayList;
 public class Server implements Runnable{
     static final int port = 1095;
-    public ArrayList<ArrayList<String>> comptes;
     public DataCon datacon;
     ServerSocket s;// = new ServerSocket(port);
     Socket socket;// = s.accept();
@@ -57,23 +56,26 @@ public class Server implements Runnable{
                 ArrayList<ArrayList<String>> rep =  datacon.query(requete.args);
                 System.out.println(rep.toString());
 
-                int port = 1095;
                 String host = "127.0.0.1"; // localhost
                 try{//connection 
-                    Socket skt = new Socket(host, port);
-                    ObjectOutputStream out = new ObjectOutputStream(skt.getOutputStream());
+                    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                     out.writeObject(rep);
-                    skt.close();
+                    socket.close();
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
                 
-            }    
+            }   
         }
         /*
         socket.close();
         datacon.disconnect();*/
 
+    }
+
+    public static ArrayList<ArrayList<String>> handle_request() throws Exception{
+        ArrayList<ArrayList<String>>  res;
+        return res;
     }
 
 

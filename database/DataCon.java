@@ -22,10 +22,10 @@ public class DataCon {
     private Connection con; 
     
 
-    public static void main(String[] args) {//example of query
+    /*public static void main(String[] args) {//example of query
         /**
          * Example of connecting to the database
-         */
+         
         int tmpint;
         System.out.println("Beginning ...");
         DataCon datacon = new DataCon();
@@ -61,11 +61,11 @@ public class DataCon {
         //System.out.println(res.toString());
 
         res = datacon.query("Select * from Eleve");
-        System.out.println(res.toString());*/
+        System.out.println(res.toString());
 
         datacon.disconnect();
         System.out.println("Good bye World!");
-    }
+    }*/
 
     DataCon(){
         /**

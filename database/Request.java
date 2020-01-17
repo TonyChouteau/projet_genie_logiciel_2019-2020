@@ -13,10 +13,9 @@ public class Request implements Serializable{
     public int requestID;//enumerate type of resquest (select or update or meove etc)
     public String args;
 
-    Request(String id, String password, String request, int type, int requestID, String args){
+    Request(String id, String password,int type, int requestID, String args){
         this.id =id;
         this.password = password;
-        this.request = request;
         this.type = type;
         this.requestID = requestID;
         this.args = args;
