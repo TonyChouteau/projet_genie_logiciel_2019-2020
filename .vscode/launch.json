@@ -6,16 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Server",
+            "request": "launch",
+            "mainClass": "database.Server",
+            "projectName": "1920-gl-fluffycorp_68f2b198"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Client",
+            "request": "launch",
+            "mainClass": "database.Client",
+            "projectName": "1920-gl-fluffycorp_68f2b198"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-            "classPaths": ["database/mysql-connector.jar"],
+            "classPaths": [
+                "database/mysql-connector.jar"
+            ],
             "mainClass": "${file}"
         },
         {
             "type": "java",
             "name": "Debug (Launch)-DataCon<1920-gl-fluffycorp_68f2b198>",
             "request": "launch",
-            "classPaths": ["database/mysql-connector.jar"],
+            "classPaths": [
+                "database/mysql-connector.jar"
+            ],
             "mainClass": "database.DataCon",
             "projectName": "1920-gl-fluffycorp_68f2b198"
         }
